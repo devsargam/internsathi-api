@@ -40,4 +40,4 @@ companySchema.statics.login = async function (email, password) {
   throw Error('Incorrect password');
 };
 
-export default mongoose.model('company', companySchema);
+export const CompanyModel = mongoose.model('Company', companySchema);

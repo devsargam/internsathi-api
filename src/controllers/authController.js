@@ -1,4 +1,4 @@
-import companyModel from '../db/models/companyModel.js';
+import { CompanyModel } from '../db/models/companyModel.js';
 import { betterErrors } from '../utils/betterErrors.js';
 import { createToken } from '../utils/createJwtToken.js';
 
@@ -9,7 +9,7 @@ export const getSignup = (req, res) => {
 export const postSignup = async (req, res) => {
   const { companyName, email, password } = req.body;
   try {
-    const company = await companyModel.create({ companyName, email, password });
+    const company = await CompanyModel.create({ companyName, email, password });
     const token = createToken(company.email);
     res.status(201).json({ token });
   } catch (e) {
@@ -27,7 +27,7 @@ export const postLogin = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const company = await companyModel.login(email, password);
+    const company = await CompanyModel.login(email, password);
     const token = createToken(company.email);
     res.status(200).json({ token });
   } catch (error) {
