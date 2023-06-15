@@ -11,6 +11,7 @@ const companySchema = new mongoose.Schema({
     required: [true, 'Please enter your company email'],
     unique: true,
     validate: [validator.isEmail, 'Please enter a valid email'],
+    lowercase: true,
   },
   password: {
     type: String,
