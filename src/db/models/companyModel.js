@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
+import bcrypt from 'bcrypt';
 
 const companySchema = new mongoose.Schema({
   companyName: {
@@ -18,6 +19,13 @@ const companySchema = new mongoose.Schema({
     required: [true, 'Please enter your password'],
     minlength: [6, 'Password should be at least 6 characters'],
   },
+});
+
+companySchema.pre('save', async function (next) {
+  // Hash password
+  const salt = await bcrypt.genSalt();
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
 });
 
 export default mongoose.model('company', companySchema);
