@@ -12,10 +12,10 @@ app.use(express.json());
 app.use(cors());
 app.use(morgan('dev'));
 
+dbConnect();
+
 // Register routes
 app.use('/api/auth', authRoute);
-
-dbConnect();
 
 const PORT = process.env.PORT ?? 3000;
 

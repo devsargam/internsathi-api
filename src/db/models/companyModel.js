@@ -28,4 +28,16 @@ companySchema.pre('save', async function (next) {
   next();
 });
 
+companySchema.statics.login = async function (email, password) {
+  const company = await this.findOne({ email });
+  if (!company) {
+    throw Error('Incorrect email');
+  }
+  const auth = await bcrypt.compare(password, company.password);
+  if (auth) {
+    return company;
+  }
+  throw Error('Incorrect password');
+};
+
 export default mongoose.model('company', companySchema);
