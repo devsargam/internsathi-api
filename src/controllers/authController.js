@@ -1,13 +1,6 @@
-import jwt from 'jsonwebtoken';
-
 import companyModel from '../db/models/companyModel.js';
 import { betterErrors } from '../utils/betterErrors.js';
-
-const createToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN ?? '1500s',
-  });
-};
+import { createToken } from '../utils/createJwtToken.js';
 
 export const getSignup = (req, res) => {
   res.send('signup');
