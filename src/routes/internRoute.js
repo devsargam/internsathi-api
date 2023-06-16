@@ -4,7 +4,6 @@ import { jwtAuth } from '../middleware/jwtAuth.js';
 
 const router = Router();
 
-// TODO: Add functionality to controllers
 router.get('/', jwtAuth, intern.getInternships);
 router.get('/:id', jwtAuth, intern.getInternship);
 router.post('/', jwtAuth, intern.postInternship);

@@ -28,9 +28,19 @@ const internshipSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  status: {
+    type: String,
+    required: true,
+    enum: ['open', 'closed'],
+    default: 'open',
+  },
   department: {
     type: String,
     required: true,
+  },
+  createdBy: {
+    type: mongoose.Types.ObjectId,
+    ref: 'User',
   },
 });
 

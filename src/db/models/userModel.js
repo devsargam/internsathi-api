@@ -27,6 +27,12 @@ const userSchema = new mongoose.Schema({
       message: 'Role should be either user or company',
     },
   },
+  internships: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Internship',
+    },
+  ],
 });
 
 userSchema.pre('save', async function (next) {

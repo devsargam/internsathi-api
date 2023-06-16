@@ -9,10 +9,11 @@ export const jwtAuth = (req, res, next) => {
   }
   jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
     if (err) {
-      res.json({ error: err.message });
-    } else {
-      console.log(decodedToken);
-      next();
+      return res.json({ error: err.message });
     }
+    console.log('decodedToken');
+    console.log(decodedToken);
+    req.user = decodedToken;
+    next();
   });
 };
