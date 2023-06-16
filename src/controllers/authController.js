@@ -9,8 +9,14 @@ export const getSignup = (req, res) => {
 export const postSignup = async (req, res) => {
   const { username, email, password, role } = req.body;
   try {
-    const user = await UserModel.create({ username, email, password, role });
-    const token = createToken(user.email);
+    // Check if user exists
+    const user = await UserModel.findOne({ email });
+    if (user) {
+      return res.status(400).json({ error: 'User already exists' });
+    }
+    await UserModel.create({ username, email, password, role });
+    const payload = { email: email, role: role ?? 'user' };
+    const token = createToken(payload);
     res.status(201).json({ token });
   } catch (e) {
     console.log(e);
@@ -28,7 +34,8 @@ export const postLogin = async (req, res) => {
 
   try {
     const user = await UserModel.login(email, password);
-    const token = createToken(user.email);
+    const payload = { email: email, role: user.role };
+    const token = createToken(payload);
     res.status(200).json({ token });
   } catch (error) {
     res.status(400).json({ error: error.message });
