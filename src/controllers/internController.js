@@ -34,7 +34,12 @@ export const postInternship = async (req, res) => {
 export const deleteInternship = async (req, res) => {
   const { id } = req.params;
   try {
+    const internship = await InternshipModel.findById(id);
+    if (!internship) {
+      return res.status(404).json({ message: 'Internship not found.' });
+    }
     await InternshipModel.findByIdAndRemove(id);
+
     res.json({ message: 'Internship deleted successfully.' });
   } catch (error) {
     res.status(409).json({ message: error.message });
