@@ -10,7 +10,7 @@ API for internsathi - internship Application Management System
 - MongoDB
 - Yarn
 
-## Installation
+## ⬇️ Installation
 
 1. Clone the repository
 2. Install the dependencies
@@ -25,6 +25,11 @@ yarn
 yarn dev
 ```
 
-## 📝 License
+## 📝 Documentation
+
+Use [insomnia](https://docs.insomnia.rest) to test the API
+import [config](Insomnia_internsathi_API.json) to insomnia project then explore different routes
+
+## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
