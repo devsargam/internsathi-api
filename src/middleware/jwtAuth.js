@@ -3,7 +3,6 @@ import jwt from 'jsonwebtoken';
 export const jwtAuth = (req, res, next) => {
   const token = req.headers.authorization?.split(' ')[1];
 
-  // Guard clause
   if (!token) {
     res.status(401).json({ error: 'Unauthorized' });
   }
@@ -11,8 +10,6 @@ export const jwtAuth = (req, res, next) => {
     if (err) {
       return res.json({ error: err.message });
     }
-    console.log('decodedToken');
-    console.log(decodedToken);
     req.user = decodedToken;
     next();
   });

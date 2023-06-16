@@ -15,7 +15,6 @@ export const postSignup = async (req, res) => {
     const token = createToken(payload);
     res.status(201).json({ token });
   } catch (e) {
-    console.log(e);
     const error = betterErrors(e);
     res.status(400).json({ error });
   }

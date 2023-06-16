@@ -10,6 +10,7 @@ import internRoute from './routes/internRoute.js';
 import applicationRoute from './routes/applicationRoute.js';
 
 const app = express();
+// Using necessary middlewares
 app.use(express.json());
 app.use(cors());
 app.use(morgan('dev'));
