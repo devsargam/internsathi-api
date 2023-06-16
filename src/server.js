@@ -7,6 +7,7 @@ import morgan from 'morgan';
 import dbConnect from './db/index.js';
 import authRoute from './routes/authRoute.js';
 import internRoute from './routes/internRoute.js';
+import applicationRoute from './routes/applicationRoute.js';
 
 const app = express();
 app.use(express.json());
@@ -18,6 +19,7 @@ dbConnect();
 // Register routes
 app.use('/api/auth', authRoute);
 app.use('/api/internships', internRoute);
+app.use('/api/applications', applicationRoute);
 
 const PORT = process.env.PORT ?? 3000;
 
