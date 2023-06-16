@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 // The internshipSchema is the blueprint for the Internship model.
 // It should reflect on company's internship posting.
-// It should be in relation with companySchema.
+// It should be in relation with userSchema.
 const internshipSchema = new mongoose.Schema({
   title: {
     type: String,

@@ -2,14 +2,14 @@ import mongoose from 'mongoose';
 import validator from 'validator';
 import bcrypt from 'bcrypt';
 
-const companySchema = new mongoose.Schema({
-  companyName: {
+const userSchema = new mongoose.Schema({
+  username: {
     type: String,
-    required: [true, 'Please enter your company name'],
+    required: [true, 'Please enter your username'],
   },
   email: {
     type: String,
-    required: [true, 'Please enter your company email'],
+    required: [true, 'Please enter your email'],
     unique: true,
     validate: [validator.isEmail, 'Please enter a valid email'],
     lowercase: true,
@@ -19,16 +19,24 @@ const companySchema = new mongoose.Schema({
     required: [true, 'Please enter your password'],
     minlength: [6, 'Password should be at least 6 characters'],
   },
+  role: {
+    type: String,
+    default: 'user',
+    validate: {
+      validator: (role) => role === 'user' || role === 'company',
+      message: 'Role should be either user or company',
+    },
+  },
 });
 
-companySchema.pre('save', async function (next) {
+userSchema.pre('save', async function (next) {
   // Hash password
   const salt = await bcrypt.genSalt();
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
 
-companySchema.statics.login = async function (email, password) {
+userSchema.statics.login = async function (email, password) {
   const company = await this.findOne({ email });
   if (!company) {
     throw Error('Incorrect email');
@@ -40,4 +48,4 @@ companySchema.statics.login = async function (email, password) {
   throw Error('Incorrect password');
 };
 
-export const CompanyModel = mongoose.model('Company', companySchema);
+export const UserModel = mongoose.model('User', userSchema);
