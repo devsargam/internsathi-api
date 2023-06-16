@@ -1,12 +1,24 @@
 import { InternshipModel } from '../db/models/internshipModel.js';
 
 export const getInternships = async (req, res) => {
-  try {
-    const internships = await InternshipModel.find({ createdBy: req.user.id });
-    res.status(200).json(internships);
-  } catch (error) {
-    res.status(404).json({ message: error.message });
-  }
+  const queryObject = {
+    createdBy: req.user.id,
+  };
+
+  let result = InternshipModel.find(queryObject);
+  // Implementing pagination
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const startIndex = (page - 1) * limit;
+  const total = await InternshipModel.countDocuments(result);
+  result = result.skip(startIndex).limit(limit);
+  const internships = await result;
+  const nomOfPages = Math.ceil(total / limit);
+  return res.status(200).json({
+    internships,
+    totalPages: nomOfPages,
+    currentPage: page,
+  });
 };
 
 export const getInternship = async (req, res) => {
@@ -39,7 +51,7 @@ export const deleteInternship = async (req, res) => {
     if (!internship) {
       return res.status(404).json({ message: 'Internship not found.' });
     }
-    if (internship.createdBy !== req.user.id.toString()) {
+    if (internship.createdBy.toString() !== req.user.id) {
       return res
         .status(401)
         .json({ message: 'No permission to delete this internship' });
