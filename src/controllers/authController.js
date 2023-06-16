@@ -2,10 +2,6 @@ import { UserModel } from '../db/models/userModel.js';
 import { betterErrors } from '../utils/betterErrors.js';
 import { createToken } from '../utils/createJwtToken.js';
 
-export const getSignup = (req, res) => {
-  res.send('signup');
-};
-
 export const postSignup = async (req, res) => {
   const { username, email, password, role } = req.body;
   try {
@@ -23,10 +19,6 @@ export const postSignup = async (req, res) => {
     const error = betterErrors(e);
     res.status(400).json({ error });
   }
-};
-
-export const getLogin = (req, res) => {
-  res.send('login');
 };
 
 export const postLogin = async (req, res) => {
