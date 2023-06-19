@@ -20,7 +20,7 @@ const internshipSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  qualifaication: {
+  qualification: {
     type: String,
     required: true,
   },
