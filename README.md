@@ -6,11 +6,39 @@ API for internsathi - internship Application Management System
 
 ## Requirements
 
+- Docker
+
+or
+
 - Node.js
 - MongoDB
 - Yarn
 
 ## ⬇️ Installation
+
+### With docker
+
+<details>
+<summary> 
+Click Me
+</summary>
+
+1. Clone the repository
+2. Use docker-compose to run the server
+
+```bash
+git clone git@github.com:devsargam/internsathi-api.git
+docker-compose up
+```
+
+</details>
+
+### without docker
+
+<details>
+<summary> 
+Click Me
+</summary>
 
 1. Clone the repository
 2. Install the dependencies
@@ -24,6 +52,8 @@ cp .env.example .env
 yarn
 yarn dev
 ```
+
+</details>
 
 ## 📝 Documentation
 
