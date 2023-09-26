@@ -3,16 +3,13 @@ import { InternshipModel } from '../db/models/internshipModel.js';
 
 export const getInternships = async (req: Request, res: Response) => {
   const queryObject = {
-    // @ts-ignore
-    createdBy: req.user.id,
+    createdBy: res.locals.user._id,
   };
 
   let result = InternshipModel.find(queryObject);
   // Implementing pagination
-  // @ts-ignore
-  const page = parseInt(req.query.page) || 1;
-  // @ts-ignore
-  const limit = parseInt(req.query.limit) || 10;
+  const page = parseInt(req.query.page as string) || 1;
+  const limit = parseInt(req.query.limit as string) || 10;
   const startIndex = (page - 1) * limit;
   const total = await InternshipModel.countDocuments(result);
   result = result.skip(startIndex).limit(limit);
@@ -37,8 +34,7 @@ export const getInternship = async (req: Request, res: Response) => {
 
 export const postInternship = async (req: Request, res: Response) => {
   const internship = req.body;
-  // @ts-ignore
-  internship.createdBy = req.user.id;
+  internship.createdBy = res.locals.user._id;
   const newInternship = new InternshipModel(internship);
   console.log(newInternship);
   try {
@@ -56,8 +52,7 @@ export const deleteInternship = async (req: Request, res: Response) => {
     if (!internship) {
       return res.status(404).json({ message: 'Internship not found.' });
     }
-    // @ts-ignore
-    if (internship.createdBy.toString() !== req.user.id) {
+    if (internship.createdBy.toString() !== res.locals.user._id) {
       return res
         .status(401)
         .json({ message: 'No permission to delete this internship' });
@@ -73,8 +68,7 @@ export const updateInternship = async (req: Request, res: Response) => {
   const { id } = req.params;
   const internship = req.body;
   try {
-    // @ts-ignore
-    if (internship.createdBy != req.user.id.toString()) {
+    if (internship.createdBy != res.locals.user._id.toString()) {
       return res
         .status(401)
         .json({ message: 'No permission to update this internship' });

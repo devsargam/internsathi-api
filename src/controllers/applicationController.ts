@@ -28,8 +28,8 @@ export const getApplication = async (req: Request, res: Response) => {
 
 export const postApplication = async (req: Request, res: Response) => {
   const { internshipId, applicantName } = req.body;
-  // @ts-ignore
-  const reqUserId = req.user.id;
+
+  const reqUserId = res.locals.user._id;
   try {
     const application = await ApplicationModel.create({
       internshipId,
@@ -50,9 +50,7 @@ export const deleteApplication = async (req: Request, res: Response) => {
     if (!application) {
       return res.status(404).json({ message: 'Application not found.' });
     }
-    // check if user is the owner of the application
-    // @ts-ignore
-    if (application.userId.toString() !== req.user.id) {
+    if (application.userId.toString() !== res.locals.user._id) {
       return res
         .status(401)
         .json({ message: 'No permission to delete this application' });

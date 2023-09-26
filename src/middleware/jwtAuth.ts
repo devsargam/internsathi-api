@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+import { iUser } from '../../types';
 
 export const jwtAuth = (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization?.split(' ')[1];
@@ -11,13 +12,11 @@ export const jwtAuth = (req: Request, res: Response, next: NextFunction) => {
   if (!process.env.JWT_SECRET) {
     return res.status(500).json({ error: 'Internal server error' });
   }
-
-  jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
-    if (err) {
-      return res.json({ error: err.message });
-    }
-    // @ts-ignore
-    req.user = decodedToken;
+  try {
+    const decodedToken = jwt.verify(token, 'wrong-secret');
+    res.locals.user = decodedToken as iUser;
     next();
-  });
+  } catch (err) {
+    res.status(401).json({ error: 'Unauthorized' });
+  }
 };

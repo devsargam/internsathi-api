@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { UserModel } from '../db/models/userModel.js';
 import { betterErrors } from '../utils/betterErrors.js';
 import { createToken } from '../utils/createJwtToken.js';
+import { iUser } from '../../types/user.js';
 
 export const postSignup = async (req: Request, res: Response) => {
   const { username, email, password, role } = req.body;
@@ -12,7 +13,13 @@ export const postSignup = async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'User already exists' });
     }
     const newUser = await UserModel.create({ username, email, password, role });
-    const payload = { id: newUser._id, role: role ?? 'user' };
+    const payload: iUser = {
+      _id: newUser._id.toString(),
+      email: newUser.email,
+      password: newUser.password,
+      role: newUser.role,
+      __v: newUser.__v,
+    }
     const token = createToken(payload);
     res.status(201).json({ token });
   } catch (e) {
@@ -27,7 +34,7 @@ export const postLogin = async (req: Request, res: Response) => {
   try {
     // @ts-ignore
     const user = await UserModel.login(email, password);
-    const payload = { id: user._id, role: user.role };
+    const payload = user;
     const token = createToken(payload);
     res.status(200).json({ token });
   } catch (error) {

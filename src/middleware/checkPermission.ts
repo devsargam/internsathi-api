@@ -5,8 +5,7 @@ export const checkIfUserIsCompany = (
   res: Response,
   next: NextFunction
 ) => {
-  // @ts-ignore
-  if (req.user.role !== 'company') {
+  if (res.locals.user.role !== 'company') {
     return res.status(403).json({
       message: 'Insufficient Permissions: Access Denied for Internship Actions',
     });
