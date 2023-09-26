@@ -1,13 +1,20 @@
-import mongoose from 'mongoose';
+import { Schema, Types, model } from 'mongoose';
 
-const applicationSchema = new mongoose.Schema({
+interface IApplication {
+  internshipId: Types.ObjectId;
+  userId: Types.ObjectId;
+  status: 'pending' | 'accepted' | 'rejected';
+  applicantName: string;
+}
+
+const applicationSchema = new Schema<IApplication>({
   internshipId: {
-    type: mongoose.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'Internship',
     required: true,
   },
   userId: {
-    type: mongoose.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'User',
     required: true,
   },
@@ -23,7 +30,7 @@ const applicationSchema = new mongoose.Schema({
   },
 });
 
-export const ApplicationModel = mongoose.model(
+export const ApplicationModel = model<IApplication>(
   'Application',
   applicationSchema
 );
