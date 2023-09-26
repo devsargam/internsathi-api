@@ -45,7 +45,6 @@ export const postInternship = async (req: Request, res: Response) => {
     await newInternship.save();
     res.status(201).json(newInternship);
   } catch (error) {
-
     res.status(409).json({ message: (error as Error).message });
   }
 };

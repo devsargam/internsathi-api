@@ -1,7 +1,10 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response } from 'express';
 
-export const checkIfUserIsCompany = (req: Request, res: Response, next: NextFunction) => {
-
+export const checkIfUserIsCompany = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   // @ts-ignore
   if (req.user.role !== 'company') {
     return res.status(403).json({
