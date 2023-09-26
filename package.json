@@ -28,6 +28,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.3.0",
     "morgan": "^1.10.0",
+    "typescript": "^5.2.2",
     "validator": "^13.9.0"
   },
   "devDependencies": {
