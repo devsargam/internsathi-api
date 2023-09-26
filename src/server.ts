@@ -23,6 +23,7 @@ app.use('/api/internships', internRoute);
 app.use('/api/applications', applicationRoute);
 
 const PORT = process.env.PORT ?? 3000;
+console.log(process.env.PORT);
 
 app.listen(PORT, () => {
   console.clear();

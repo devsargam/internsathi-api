@@ -1,6 +1,7 @@
-import { ApplicationModel } from '../db/models/applicationModel.js';
+import { Request, Response } from 'express';
+import { ApplicationModel } from '../db/models/applicationModel';
 
-export const getApplications = async (req, res) => {
+export const getApplications = async (req: Request, res: Response) => {
   try {
     // find by internshipId
     if (req.query.id) {
@@ -10,23 +11,24 @@ export const getApplications = async (req, res) => {
       return res.status(200).json({ applications });
     }
     return res.status(200).json({ error: 'missing internship id' });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
+  } catch (error: unknown) {
+    res.status(400).json({ error: (error as Error).message });
   }
 };
 
-export const getApplication = async (req, res) => {
+export const getApplication = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
     const application = await ApplicationModel.findById(id);
     res.status(200).json({ application });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: (error as Error).message });
   }
 };
 
-export const postApplication = async (req, res) => {
+export const postApplication = async (req: Request, res: Response) => {
   const { internshipId, applicantName } = req.body;
+  // @ts-ignore
   const reqUserId = req.user.id;
   try {
     const application = await ApplicationModel.create({
@@ -36,11 +38,11 @@ export const postApplication = async (req, res) => {
     });
     res.status(201).json({ application });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: (error as Error).message });
   }
 };
 
-export const deleteApplication = async (req, res) => {
+export const deleteApplication = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
     // check if application even exists
@@ -49,6 +51,7 @@ export const deleteApplication = async (req, res) => {
       return res.status(404).json({ message: 'Application not found.' });
     }
     // check if user is the owner of the application
+    // @ts-ignore
     if (application.userId.toString() !== req.user.id) {
       return res
         .status(401)
@@ -57,6 +60,6 @@ export const deleteApplication = async (req, res) => {
     await ApplicationModel.findByIdAndDelete(id);
     res.status(200).json({ message: 'Application deleted successfully.' });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: (error as Error).message });
   }
 };

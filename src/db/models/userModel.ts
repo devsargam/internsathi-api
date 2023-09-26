@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: 'user',
     validate: {
-      validator: (role) => role === 'user' || role === 'company',
+      validator: (role: string) => role === 'user' || role === 'company',
       message: 'Role should be either user or company',
     },
   },

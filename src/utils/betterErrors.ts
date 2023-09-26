@@ -1,4 +1,5 @@
 // Improves the readability of the error messages given by mongoose validation
+// @ts-ignore
 export function betterErrors(error) {
   let errors = { ...error.errors };
   // Duplicate key error
