@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { UserModel } from '../db/models/userModel.js';
 import { betterErrors } from '../utils/betterErrors.js';
 import { createToken } from '../utils/createJwtToken.js';
-import { iUser } from '../../types/user.js';
+import { IUser } from '../../types/user.js';
 
 export const postSignup = async (req: Request, res: Response) => {
   const { username, email, password, role } = req.body;
@@ -13,7 +13,7 @@ export const postSignup = async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'User already exists' });
     }
     const newUser = await UserModel.create({ username, email, password, role });
-    const payload: iUser = {
+    const payload: IUser = {
       _id: newUser._id.toString(),
       email: newUser.email,
       password: newUser.password,

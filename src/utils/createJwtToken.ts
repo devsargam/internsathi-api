@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
-import { iUser } from '../../types';
+import { IUser } from '../../types';
 
-export const createToken = (payload: iUser) => {
+export const createToken = (payload: IUser) => {
   if (!process.env.JWT_SECRET) {
     throw new Error('JWT_SECRET not defined');
   }
