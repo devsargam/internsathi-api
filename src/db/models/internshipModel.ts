@@ -1,9 +1,18 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 
-// The internshipSchema is the blueprint for the Internship model.
-// It should reflect on company's internship posting.
-// It should be in relation with userSchema.
-const internshipSchema = new mongoose.Schema({
+interface IInternship {
+  title: string;
+  company: string;
+  salary: string;
+  position: string;
+  qualification: string;
+  deadline: Date;
+  status: 'open' | 'closed';
+  department: string;
+  createdBy: Schema.Types.ObjectId;
+}
+
+const internshipSchema = new mongoose.Schema<IInternship>({
   title: {
     type: String,
     required: true,
@@ -25,7 +34,7 @@ const internshipSchema = new mongoose.Schema({
     required: true,
   },
   deadline: {
-    type: String,
+    type: Date,
     required: true,
   },
   status: {
@@ -39,10 +48,13 @@ const internshipSchema = new mongoose.Schema({
     required: true,
   },
   createdBy: {
-    type: mongoose.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'User',
     required: true,
   },
 });
 
-export const InternshipModel = mongoose.model('Internship', internshipSchema);
+export const InternshipModel = model<IInternship>(
+  'Internship',
+  internshipSchema
+);
