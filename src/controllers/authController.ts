@@ -19,7 +19,7 @@ export const postSignup = async (req: Request, res: Response) => {
       password: newUser.password,
       role: newUser.role,
       __v: newUser.__v,
-    }
+    };
     const token = createToken(payload);
     res.status(201).json({ token });
   } catch (e) {
