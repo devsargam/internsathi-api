@@ -32,9 +32,9 @@ export const postLogin = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   try {
-    // @ts-ignore
     const user = await UserModel.login(email, password);
     const payload = user;
+    // @ts-ignore
     const token = createToken(payload);
     res.status(200).json({ token });
   } catch (error) {

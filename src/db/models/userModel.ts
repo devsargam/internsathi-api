@@ -1,8 +1,20 @@
-import mongoose from 'mongoose';
+import { Model, Schema, Types, model } from 'mongoose';
 import validator from 'validator';
 import bcrypt from 'bcrypt';
 
-const userSchema = new mongoose.Schema({
+interface IUser {
+  username: string;
+  email: string;
+  password: string;
+  role: string;
+  internships: Types.ObjectId[];
+}
+
+interface UserModel extends Model<IUser> {
+  login(email: string, password: string): Promise<IUser>;
+}
+
+const userSchema = new Schema<IUser, UserModel>({
   username: {
     type: String,
     required: [true, 'Please enter your username'],
@@ -29,7 +41,7 @@ const userSchema = new mongoose.Schema({
   },
   internships: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'Internship',
     },
   ],
@@ -42,16 +54,16 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-userSchema.statics.login = async function (email, password) {
-  const company = await this.findOne({ email });
-  if (!company) {
-    throw Error('Incorrect email');
+userSchema.statics.login = async function (email: string, password: string) {
+  const user: IUser | null = await this.findOne({ email });
+  if (!user) {
+    throw new Error('Incorrect email');
   }
-  const auth = await bcrypt.compare(password, company.password);
-  if (auth) {
-    return company;
+  const auth = await bcrypt.compare(password, user.password);
+  if (!auth) {
+    throw new Error('Incorrect password');
   }
-  throw Error('Incorrect password');
+  return user;
 };
 
-export const UserModel = mongoose.model('User', userSchema);
+export const UserModel = model<IUser, UserModel>('User', userSchema);
