@@ -1,14 +1,7 @@
 import { Model, Schema, Types, model } from 'mongoose';
 import validator from 'validator';
 import bcrypt from 'bcrypt';
-
-interface IUser {
-  username: string;
-  email: string;
-  password: string;
-  role: string;
-  internships: Types.ObjectId[];
-}
+import { IUser } from '../../../types';
 
 interface UserModel extends Model<IUser> {
   login(email: string, password: string): Promise<IUser>;

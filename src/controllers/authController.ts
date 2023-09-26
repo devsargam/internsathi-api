@@ -13,14 +13,7 @@ export const postSignup = async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'User already exists' });
     }
     const newUser = await UserModel.create({ username, email, password, role });
-    const payload: IUser = {
-      _id: newUser._id.toString(),
-      email: newUser.email,
-      password: newUser.password,
-      role: newUser.role,
-      __v: newUser.__v,
-    };
-    const token = createToken(payload);
+    const token = createToken(newUser);
     res.status(201).json({ token });
   } catch (e) {
     const error = betterErrors(e);
@@ -34,7 +27,6 @@ export const postLogin = async (req: Request, res: Response) => {
   try {
     const user = await UserModel.login(email, password);
     const payload = user;
-    // @ts-ignore
     const token = createToken(payload);
     res.status(200).json({ token });
   } catch (error) {

@@ -1,7 +1,9 @@
+import { Types } from "mongoose";
+
 export interface IUser {
-  _id: string;
+  username: string;
   email: string;
   password: string;
   role: string;
-  __v: number;
+  internships: Types.ObjectId[];
 }

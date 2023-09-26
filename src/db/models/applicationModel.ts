@@ -1,11 +1,5 @@
 import { Schema, Types, model } from 'mongoose';
-
-interface IApplication {
-  internshipId: Types.ObjectId;
-  userId: Types.ObjectId;
-  status: 'pending' | 'accepted' | 'rejected';
-  applicantName: string;
-}
+import { IApplication } from '../../../types';
 
 const applicationSchema = new Schema<IApplication>({
   internshipId: {

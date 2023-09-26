@@ -1,16 +1,5 @@
 import mongoose, { Schema, model } from 'mongoose';
-
-interface IInternship {
-  title: string;
-  company: string;
-  salary: string;
-  position: string;
-  qualification: string;
-  deadline: Date;
-  status: 'open' | 'closed';
-  department: string;
-  createdBy: Schema.Types.ObjectId;
-}
+import { IInternship } from '../../../types';
 
 const internshipSchema = new mongoose.Schema<IInternship>({
   title: {
