@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { IUser } from '../../types';
+import { IUser } from '../types';
 
 export const createToken = (payload: IUser) => {
   if (!process.env.JWT_SECRET) {

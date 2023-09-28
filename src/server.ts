@@ -5,9 +5,9 @@ import cors from 'cors';
 import morgan from 'morgan';
 
 import dbConnect from './db/index';
-import authRoute from './routes/authRoute';
-import internRoute from './routes/internRoute';
-import applicationRoute from './routes/applicationRoute';
+import authRoute from './routes/auth.route';
+import internRoute from './routes/intern.route';
+import applicationRoute from './routes/application.route';
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;

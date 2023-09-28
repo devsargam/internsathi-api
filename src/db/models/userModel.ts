@@ -1,7 +1,7 @@
 import { Model, Schema, Types, model } from 'mongoose';
 import validator from 'validator';
 import bcrypt from 'bcrypt';
-import { IUser } from '../../../types';
+import { IUser } from '../../types';
 
 interface IUserModel extends Model<IUser> {
   login(email: string, password: string): Promise<IUser>;

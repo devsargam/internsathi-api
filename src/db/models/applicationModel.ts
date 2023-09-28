@@ -1,5 +1,5 @@
 import { Schema, Types, model } from 'mongoose';
-import { IApplication } from '../../../types';
+import { IApplication } from '../../types';
 
 const applicationSchema = new Schema<IApplication>({
   internshipId: {

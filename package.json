@@ -9,7 +9,7 @@
   "private": true,
   "scripts": {
     "dev": "ts-node-dev src/server.ts",
-    "start": "node dist/src/server.js",
+    "start": "node dist/server.js",
     "build": "tsc -p tsconfig.json",
     "format": "prettier --write src/**/**",
     "prepare": "husky install"

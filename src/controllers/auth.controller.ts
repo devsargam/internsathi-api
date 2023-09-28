@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { UserModel } from '../db/models/userModel';
 import { betterErrors } from '../utils/betterErrors';
 import { createToken } from '../utils/createJwtToken';
-import { IUser } from '../../types';
+import { IUser } from '../types';
 
 export const postSignup = async (req: Request, res: Response) => {
   const { username, email, password, role } = req.body;

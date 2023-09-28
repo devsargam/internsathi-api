@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import * as intern from '../controllers/internController';
+import * as intern from '../controllers/intern.controller';
 import { jwtAuth } from '../middleware/jwtAuth';
 import { checkIfUserIsCompany } from '../middleware/checkPermission';
 

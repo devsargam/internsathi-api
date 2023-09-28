@@ -1,5 +1,5 @@
 import mongoose, { Schema, model } from 'mongoose';
-import { IInternship } from '../../../types';
+import { IInternship } from '../../types';
 
 const internshipSchema = new mongoose.Schema<IInternship>({
   title: {
