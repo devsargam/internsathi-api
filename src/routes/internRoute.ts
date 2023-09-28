@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import * as intern from '../controllers/internController.js';
-import { jwtAuth } from '../middleware/jwtAuth.js';
-import { checkIfUserIsCompany } from '../middleware/checkPermission.js';
+import * as intern from '../controllers/internController';
+import { jwtAuth } from '../middleware/jwtAuth';
+import { checkIfUserIsCompany } from '../middleware/checkPermission';
 
 const router = Router();
 

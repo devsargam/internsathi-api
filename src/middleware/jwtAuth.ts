@@ -13,7 +13,7 @@ export const jwtAuth = (req: Request, res: Response, next: NextFunction) => {
     return res.status(500).json({ error: 'Internal server error' });
   }
   try {
-    const decodedToken = jwt.verify(token, 'wrong-secret');
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
     res.locals.user = decodedToken as IUser;
     next();
   } catch (err) {

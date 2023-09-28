@@ -9,7 +9,7 @@
   "private": true,
   "scripts": {
     "dev": "ts-node-dev src/server.ts",
-    "start": "node dist/server.js",
+    "start": "node dist/src/server.js",
     "build": "tsc -p tsconfig.json",
     "format": "prettier --write src/**/**",
     "prepare": "husky install"
@@ -33,9 +33,10 @@
     "validator": "^13.9.0"
   },
   "devDependencies": {
+    "husky": "^8.0.0",
     "nodemon": "^2.0.22",
     "prettier": "^2.8.8",
     "ts-node": "^10.9.1",
-    "husky": "^8.0.0"
+    "ts-node-dev": "^2.0.0"
   }
 }

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import { InternshipModel } from '../db/models/internshipModel.js';
+import { InternshipModel } from '../db/models/internshipModel';
+import { UserModel } from '../db/models/userModel';
 
 export const getInternships = async (req: Request, res: Response) => {
   const queryObject = {
@@ -34,7 +35,11 @@ export const getInternship = async (req: Request, res: Response) => {
 
 export const postInternship = async (req: Request, res: Response) => {
   const internship = req.body;
-  internship.createdBy = res.locals.user._id;
+  const userFromDb = await UserModel.findOne({ email: res.locals.user.email });
+  if (!userFromDb) {
+    return res.status(404).json({ message: 'User not found.' });
+  }
+  internship.createdBy = userFromDb._id;
   const newInternship = new InternshipModel(internship);
   console.log(newInternship);
   try {

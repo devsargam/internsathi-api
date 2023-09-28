@@ -3,11 +3,11 @@ import validator from 'validator';
 import bcrypt from 'bcrypt';
 import { IUser } from '../../../types';
 
-interface UserModel extends Model<IUser> {
+interface IUserModel extends Model<IUser> {
   login(email: string, password: string): Promise<IUser>;
 }
 
-const userSchema = new Schema<IUser, UserModel>({
+const userSchema = new Schema<IUser, IUserModel>({
   username: {
     type: String,
     required: [true, 'Please enter your username'],
@@ -48,7 +48,7 @@ userSchema.pre('save', async function (next) {
 });
 
 userSchema.statics.login = async function (email: string, password: string) {
-  const user: IUser | null = await this.findOne({ email });
+  const user = await this.findOne({ email });
   if (!user) {
     throw new Error('Incorrect email');
   }
@@ -59,4 +59,4 @@ userSchema.statics.login = async function (email: string, password: string) {
   return user;
 };
 
-export const UserModel = model<IUser, UserModel>('User', userSchema);
+export const UserModel = model<IUser, IUserModel>('User', userSchema);

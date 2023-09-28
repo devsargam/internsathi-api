@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import { UserModel } from '../db/models/userModel.js';
-import { betterErrors } from '../utils/betterErrors.js';
-import { createToken } from '../utils/createJwtToken.js';
-import { IUser } from '../../types/user.js';
+import { UserModel } from '../db/models/userModel';
+import { betterErrors } from '../utils/betterErrors';
+import { createToken } from '../utils/createJwtToken';
+import { IUser } from '../../types';
 
 export const postSignup = async (req: Request, res: Response) => {
   const { username, email, password, role } = req.body;
@@ -22,11 +22,18 @@ export const postSignup = async (req: Request, res: Response) => {
 };
 
 export const postLogin = async (req: Request, res: Response) => {
+  console.log(req.body);
   const { email, password } = req.body;
 
   try {
     const user = await UserModel.login(email, password);
-    const payload = user;
+    const payload: IUser = {
+      username: user.username,
+      email: user.email,
+      role: user.role,
+      internships: user.internships,
+      password: user.password,
+    };
     const token = createToken(payload);
     res.status(200).json({ token });
   } catch (error) {
