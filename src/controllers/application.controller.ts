@@ -1,7 +1,10 @@
 import { Request, Response } from 'express';
 import { ApplicationModel, UserModel } from '../db/models';
 
-export const getApplications = async (req: Request, res: Response) => {
+export const getApplications = async (
+  req: Request,
+  res: Response
+) => {
   try {
     // find by internshipId
     if (req.query.id) {
@@ -26,7 +29,10 @@ export const getApplication = async (req: Request, res: Response) => {
   }
 };
 
-export const postApplication = async (req: Request, res: Response) => {
+export const postApplication = async (
+  req: Request,
+  res: Response
+) => {
   const { internshipId, applicantName } = req.body;
 
   const user = await UserModel.findOne({
@@ -49,7 +55,10 @@ export const postApplication = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteApplication = async (req: Request, res: Response) => {
+export const deleteApplication = async (
+  req: Request,
+  res: Response
+) => {
   const { id } = req.params;
   try {
     // check if application even exists

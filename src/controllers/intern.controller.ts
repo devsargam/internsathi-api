@@ -55,7 +55,10 @@ export const postInternship = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteInternship = async (req: Request, res: Response) => {
+export const deleteInternship = async (
+  req: Request,
+  res: Response
+) => {
   const { id } = req.params;
   try {
     const internship = await InternshipModel.findById(id);
@@ -80,7 +83,10 @@ export const deleteInternship = async (req: Request, res: Response) => {
   }
 };
 
-export const updateInternship = async (req: Request, res: Response) => {
+export const updateInternship = async (
+  req: Request,
+  res: Response
+) => {
   const { id } = req.params;
   const internship = req.body;
   try {

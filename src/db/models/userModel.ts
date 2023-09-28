@@ -28,7 +28,8 @@ const userSchema = new Schema<IUser, IUserModel>({
     type: String,
     default: 'user',
     validate: {
-      validator: (role: string) => role === 'user' || role === 'company',
+      validator: (role: string) =>
+        role === 'user' || role === 'company',
       message: 'Role should be either user or company',
     },
   },
@@ -47,7 +48,10 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-userSchema.statics.login = async function (email: string, password: string) {
+userSchema.statics.login = async function (
+  email: string,
+  password: string
+) {
   const user = await this.findOne({ email });
   if (!user) {
     throw new Error('Incorrect email');

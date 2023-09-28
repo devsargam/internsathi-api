@@ -14,6 +14,21 @@ export const internRouter = Router();
 
 internRouter.get('/', jwtAuth, getInternships);
 internRouter.get('/:id', jwtAuth, getInternship);
-internRouter.post('/', jwtAuth, checkRole(Role.COMPANY), postInternship);
-internRouter.delete('/:id', jwtAuth, checkRole(Role.COMPANY), deleteInternship);
-internRouter.put('/:id', jwtAuth, checkRole(Role.COMPANY), updateInternship);
+internRouter.post(
+  '/',
+  jwtAuth,
+  checkRole(Role.COMPANY),
+  postInternship
+);
+internRouter.delete(
+  '/:id',
+  jwtAuth,
+  checkRole(Role.COMPANY),
+  deleteInternship
+);
+internRouter.put(
+  '/:id',
+  jwtAuth,
+  checkRole(Role.COMPANY),
+  updateInternship
+);
