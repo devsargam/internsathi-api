@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
-import { ApplicationModel } from '../db/models/applicationModel';
-import { UserModel } from '../db/models/userModel';
+import { ApplicationModel, UserModel } from '../db/models';
 
 export const getApplications = async (req: Request, res: Response) => {
   try {
@@ -30,7 +29,9 @@ export const getApplication = async (req: Request, res: Response) => {
 export const postApplication = async (req: Request, res: Response) => {
   const { internshipId, applicantName } = req.body;
 
-  const user = await UserModel.findOne({ email: res.locals.user.email });
+  const user = await UserModel.findOne({
+    email: res.locals.user.email,
+  });
   if (!user) {
     return res.status(400).json({ error: 'User not found' });
   }
@@ -54,17 +55,23 @@ export const deleteApplication = async (req: Request, res: Response) => {
     // check if application even exists
     const application = await ApplicationModel.findById(id);
     if (!application) {
-      return res.status(404).json({ message: 'Application not found.' });
+      return res.status(404).json({
+        message: 'Application not found.',
+      });
     }
-    const user = await UserModel.findOne({ email: res.locals.user.email });
+    const user = await UserModel.findOne({
+      email: res.locals.user.email,
+    });
     if (application.userId.toString() !== user?._id.toString()) {
-      return res
-        .status(401)
-        .json({ message: 'No permission to delete this application' });
+      return res.status(401).json({
+        message: 'No permission to delete this application',
+      });
     }
 
     await ApplicationModel.findByIdAndDelete(id);
-    res.status(200).json({ message: 'Application deleted successfully.' });
+    res.status(200).json({
+      message: 'Application deleted successfully.',
+    });
   } catch (error) {
     res.status(400).json({ error: (error as Error).message });
   }

@@ -1,12 +1,15 @@
 import { Router } from 'express';
-import * as application from '../controllers/application.controller';
 import { jwtAuth } from '../middleware/jwtAuth';
+import {
+  deleteApplication,
+  getApplication,
+  getApplications,
+  postApplication,
+} from '../controllers';
 
-const router = Router();
+export const applicationRouter = Router();
 
-router.get('/', application.getApplications);
-router.get('/:id', application.getApplication);
-router.post('/', jwtAuth, application.postApplication);
-router.delete('/:id', jwtAuth, application.deleteApplication);
-
-export default router;
+applicationRouter.get('/', getApplications);
+applicationRouter.get('/:id', getApplication);
+applicationRouter.post('/', jwtAuth, postApplication);
+applicationRouter.delete('/:id', jwtAuth, deleteApplication);

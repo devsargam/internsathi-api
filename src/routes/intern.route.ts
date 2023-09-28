@@ -1,14 +1,19 @@
 import { Router } from 'express';
-import * as intern from '../controllers/intern.controller';
 import { jwtAuth } from '../middleware/jwtAuth';
-import { checkIfUserIsCompany } from '../middleware/checkPermission';
+import { checkRole } from '../middleware/checkRole';
+import {
+  deleteInternship,
+  getInternship,
+  getInternships,
+  postInternship,
+  updateInternship,
+} from '../controllers';
+import { Role } from '../constants';
 
-const router = Router();
+export const internRouter = Router();
 
-router.get('/', jwtAuth, intern.getInternships);
-router.get('/:id', jwtAuth, intern.getInternship);
-router.post('/', [jwtAuth, checkIfUserIsCompany], intern.postInternship);
-router.delete('/:id', [jwtAuth, checkIfUserIsCompany], intern.deleteInternship);
-router.put('/:id', [jwtAuth, checkIfUserIsCompany], intern.updateInternship);
-
-export default router;
+internRouter.get('/', jwtAuth, getInternships);
+internRouter.get('/:id', jwtAuth, getInternship);
+internRouter.post('/', jwtAuth, checkRole(Role.COMPANY), postInternship);
+internRouter.delete('/:id', jwtAuth, checkRole(Role.COMPANY), deleteInternship);
+internRouter.put('/:id', jwtAuth, checkRole(Role.COMPANY), updateInternship);

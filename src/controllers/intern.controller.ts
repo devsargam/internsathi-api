@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
-import { InternshipModel } from '../db/models/internshipModel';
-import { UserModel } from '../db/models/userModel';
+import { InternshipModel, UserModel } from '../db/models';
 
 export const getInternships = async (req: Request, res: Response) => {
   const queryObject = {
@@ -29,13 +28,17 @@ export const getInternship = async (req: Request, res: Response) => {
     const internship = await InternshipModel.findById(id);
     res.status(200).json(internship);
   } catch (error) {
-    res.status(404).json({ message: (error as Error).message });
+    res.status(404).json({
+      message: (error as Error).message,
+    });
   }
 };
 
 export const postInternship = async (req: Request, res: Response) => {
   const internship = req.body;
-  const userFromDb = await UserModel.findOne({ email: res.locals.user.email });
+  const userFromDb = await UserModel.findOne({
+    email: res.locals.user.email,
+  });
   if (!userFromDb) {
     return res.status(404).json({ message: 'User not found.' });
   }
@@ -46,7 +49,9 @@ export const postInternship = async (req: Request, res: Response) => {
     await newInternship.save();
     res.status(201).json(newInternship);
   } catch (error) {
-    res.status(409).json({ message: (error as Error).message });
+    res.status(409).json({
+      message: (error as Error).message,
+    });
   }
 };
 
@@ -55,17 +60,23 @@ export const deleteInternship = async (req: Request, res: Response) => {
   try {
     const internship = await InternshipModel.findById(id);
     if (!internship) {
-      return res.status(404).json({ message: 'Internship not found.' });
+      return res.status(404).json({
+        message: 'Internship not found.',
+      });
     }
     if (internship.createdBy.toString() !== res.locals.user._id) {
-      return res
-        .status(401)
-        .json({ message: 'No permission to delete this internship' });
+      return res.status(401).json({
+        message: 'No permission to delete this internship',
+      });
     }
     await InternshipModel.findByIdAndRemove(id);
-    res.json({ message: 'Internship deleted successfully.' });
+    res.json({
+      message: 'Internship deleted successfully.',
+    });
   } catch (error) {
-    res.status(409).json({ message: (error as Error).message });
+    res.status(409).json({
+      message: (error as Error).message,
+    });
   }
 };
 
@@ -74,13 +85,17 @@ export const updateInternship = async (req: Request, res: Response) => {
   const internship = req.body;
   try {
     if (internship.createdBy != res.locals.user._id.toString()) {
-      return res
-        .status(401)
-        .json({ message: 'No permission to update this internship' });
+      return res.status(401).json({
+        message: 'No permission to update this internship',
+      });
     }
     await InternshipModel.findByIdAndUpdate(id, internship);
-    res.status(202).json({ message: 'Internship updated successfully.' });
+    res.status(202).json({
+      message: 'Internship updated successfully.',
+    });
   } catch (error) {
-    res.status(409).json({ message: (error as Error).message });
+    res.status(409).json({
+      message: (error as Error).message,
+    });
   }
 };

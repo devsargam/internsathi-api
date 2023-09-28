@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { UserModel } from '../db/models/userModel';
+import { UserModel } from '../db/models';
 import { betterErrors } from '../utils/betterErrors';
 import { createToken } from '../utils/createJwtToken';
 import { IPayload, IUser } from '../types';
@@ -8,15 +8,22 @@ export const postSignup = async (req: Request, res: Response) => {
   const { username, email, password, role } = req.body;
   try {
     // Check if user exists
-    const user = await UserModel.findOne({ email });
+    const user = await UserModel.findOne({
+      email,
+    });
     if (user) {
       return res.status(400).json({ error: 'User already exists' });
     }
-    const newUser = await UserModel.create({ username, email, password, role });
+    const newUser = await UserModel.create({
+      username,
+      email,
+      password,
+      role,
+    });
     const payload: IPayload = {
       email: newUser.email,
       role: newUser.role,
-    }
+    };
     const token = createToken(payload);
     res.status(201).json({ token });
   } catch (e) {

@@ -5,9 +5,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 
 import dbConnect from './db/index';
-import authRoute from './routes/auth.route';
-import internRoute from './routes/intern.route';
-import applicationRoute from './routes/application.route';
+import { applicationRouter, authRouter, internRouter } from './routes';
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -21,9 +19,9 @@ app.use(morgan('dev'));
 
 
 // Register routes
-app.use('/api/auth', authRoute);
-app.use('/api/internships', internRoute);
-app.use('/api/applications', applicationRoute);
+app.use('/api/auth', authRouter);
+app.use('/api/internships', internRouter);
+app.use('/api/applications', applicationRouter);
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
