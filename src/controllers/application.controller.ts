@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { ApplicationModel } from '../db/models/applicationModel';
+import { UserModel } from '../db/models/userModel';
 
 export const getApplications = async (req: Request, res: Response) => {
   try {
@@ -29,7 +30,12 @@ export const getApplication = async (req: Request, res: Response) => {
 export const postApplication = async (req: Request, res: Response) => {
   const { internshipId, applicantName } = req.body;
 
-  const reqUserId = res.locals.user._id;
+  const user = await UserModel.findOne({ email: res.locals.user.email });
+  if (!user) {
+    return res.status(400).json({ error: 'User not found' });
+  }
+
+  const reqUserId = user._id;
   try {
     const application = await ApplicationModel.create({
       internshipId,
@@ -50,11 +56,13 @@ export const deleteApplication = async (req: Request, res: Response) => {
     if (!application) {
       return res.status(404).json({ message: 'Application not found.' });
     }
-    if (application.userId.toString() !== res.locals.user._id) {
+    const user = await UserModel.findOne({ email: res.locals.user.email });
+    if (application.userId.toString() !== user?._id.toString()) {
       return res
         .status(401)
         .json({ message: 'No permission to delete this application' });
     }
+
     await ApplicationModel.findByIdAndDelete(id);
     res.status(200).json({ message: 'Application deleted successfully.' });
   } catch (error) {
