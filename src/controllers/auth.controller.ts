@@ -52,13 +52,11 @@ export const postLogin = async (req: Request, res: Response) => {
       role: user.role,
     };
     const token = createToken(payload);
-    res
-      .status(200)
-      .json({
-        success: true,
-        token,
-        message: 'User Login successfull',
-      });
+    res.status(200).json({
+      success: true,
+      token,
+      message: 'User Login successfull',
+    });
   } catch (error) {
     // @ts-ignore
     res.status(400).json({ success: false, error: error.message });

@@ -109,21 +109,17 @@ export const deleteInternship = async (
     }
 
     if (internship.createdBy.toString() !== res.locals.user._id) {
-      return res
-        .status(401)
-        .json({
-          success: false,
-          message: 'No permission to delete this internship',
-        });
+      return res.status(401).json({
+        success: false,
+        message: 'No permission to delete this internship',
+      });
     }
 
     await InternshipModel.findByIdAndRemove(params.id);
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: 'Internship deleted successfully',
-      });
+    res.status(200).json({
+      success: true,
+      message: 'Internship deleted successfully',
+    });
   } catch (error) {
     res
       .status(500)
@@ -151,24 +147,20 @@ export const updateInternship = async (
     }
 
     if (internship.createdBy.toString() !== res.locals.user._id) {
-      return res
-        .status(401)
-        .json({
-          success: false,
-          message: 'No permission to update this internship',
-        });
+      return res.status(401).json({
+        success: false,
+        message: 'No permission to update this internship',
+      });
     }
 
     await InternshipModel.findByIdAndUpdate(
       params.id,
       internshipData
     );
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: 'Internship updated successfully',
-      });
+    res.status(200).json({
+      success: true,
+      message: 'Internship updated successfully',
+    });
   } catch (error) {
     res
       .status(500)
