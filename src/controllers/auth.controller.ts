@@ -3,10 +3,12 @@ import { UserModel } from '../db/models';
 import { betterErrors } from '../utils/betterErrors';
 import { createToken } from '../utils/createJwtToken';
 import { IPayload, IUser } from '../types';
-import { SignUpValidation, SignInValidation } from '../validations/auth.validation';
+import {
+  SignUpValidation,
+  SignInValidation,
+} from '../validations/auth.validation';
 
 export const postSignup = async (req: Request, res: Response) => {
-
   const parseData = SignUpValidation.parse(req.body);
 
   const { username, email, password, role } = parseData;
@@ -16,7 +18,9 @@ export const postSignup = async (req: Request, res: Response) => {
       email,
     });
     if (user) {
-      return res.status(400).json({ success: false, error: 'User already exists' });
+      return res
+        .status(400)
+        .json({ success: false, error: 'User already exists' });
     }
     const newUser = await UserModel.create({
       username,
@@ -37,7 +41,6 @@ export const postSignup = async (req: Request, res: Response) => {
 };
 
 export const postLogin = async (req: Request, res: Response) => {
-
   const parseData = SignInValidation.parse(req.body);
 
   const { email, password } = parseData;
@@ -49,7 +52,13 @@ export const postLogin = async (req: Request, res: Response) => {
       role: user.role,
     };
     const token = createToken(payload);
-    res.status(200).json({ success: true, token, message: 'User Login successfull' });
+    res
+      .status(200)
+      .json({
+        success: true,
+        token,
+        message: 'User Login successfull',
+      });
   } catch (error) {
     // @ts-ignore
     res.status(400).json({ success: false, error: error.message });

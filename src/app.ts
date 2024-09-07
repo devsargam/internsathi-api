@@ -5,7 +5,11 @@ import cors from 'cors';
 import morgan from 'morgan';
 
 import dbConnect from './db/index';
-import { applicationRouter, authRouter, internRouter } from './routes';
+import {
+  applicationRouter,
+  authRouter,
+  internRouter,
+} from './routes';
 
 const app = express();
 
@@ -16,8 +20,7 @@ app.use(express.json());
 app.use(cors());
 app.use(morgan('dev'));
 
-
-console.log(cors)
+console.log(cors);
 // Register routes
 app.use('/api/auth', authRouter);
 app.use('/api/internships', internRouter);
