@@ -42,13 +42,11 @@ export const postSignup = async (req: Request, res: Response) => {
     const token = createToken(payload);
 
     // Respond with success
-    res
-      .status(201)
-      .json({
-        success: true,
-        token,
-        message: 'User signup successful',
-      });
+    res.status(201).json({
+      success: true,
+      token,
+      message: 'User signup successful',
+    });
   } catch (e) {
     // Handle validation or server errors
     const error = betterErrors(e);
