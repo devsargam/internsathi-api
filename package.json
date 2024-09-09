@@ -16,6 +16,8 @@
     "test": "jest"
   },
   "dependencies": {
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.6",
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.1.4",
@@ -24,6 +26,8 @@
     "mongoose": "^7.3.3",
     "morgan": "^1.10.0",
     "supertest": "^6.3.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "typescript": "^5.2.2",
     "validator": "^13.9.0",
     "zod": "^3.23.8"
