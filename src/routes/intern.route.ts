@@ -274,7 +274,12 @@ internRouter.get('/:id', jwtAuth, getInternship);
  *                   type: string
  *                   example: "Internal server error"
  */
-internRouter.post('/', jwtAuth, checkRole(Role.COMPANY), postInternship);
+internRouter.post(
+  '/',
+  jwtAuth,
+  checkRole(Role.COMPANY),
+  postInternship
+);
 
 /**
  * @openapi
@@ -331,7 +336,12 @@ internRouter.post('/', jwtAuth, checkRole(Role.COMPANY), postInternship);
  *                   type: string
  *                   example: "Internal server error"
  */
-internRouter.delete('/:id', jwtAuth, checkRole(Role.COMPANY), deleteInternship);
+internRouter.delete(
+  '/:id',
+  jwtAuth,
+  checkRole(Role.COMPANY),
+  deleteInternship
+);
 
 /**
  * @openapi
@@ -461,4 +471,9 @@ internRouter.delete('/:id', jwtAuth, checkRole(Role.COMPANY), deleteInternship);
  *                   type: string
  *                   example: "Internal server error"
  */
-internRouter.put('/:id', jwtAuth, checkRole(Role.COMPANY), updateInternship);
+internRouter.put(
+  '/:id',
+  jwtAuth,
+  checkRole(Role.COMPANY),
+  updateInternship
+);
