@@ -4,7 +4,10 @@ import { UserModel } from '../db/models';
 import { Request, Response } from 'express';
 import { betterErrors } from '../utils/betterErrors';
 import { createToken } from '../utils/createJwtToken';
-import { SignUpValidation, SignInValidation } from '../validations/auth.validation';
+import {
+  SignUpValidation,
+  SignInValidation,
+} from '../validations/auth.validation';
 
 export const postSignup = async (req: Request, res: Response) => {
   try {
@@ -39,15 +42,19 @@ export const postSignup = async (req: Request, res: Response) => {
     const token = createToken(payload);
 
     // Respond with success
-    res.status(201).json({ success: true, token, message: 'User signup successful' });
-
+    res
+      .status(201)
+      .json({
+        success: true,
+        token,
+        message: 'User signup successful',
+      });
   } catch (e) {
     // Handle validation or server errors
     const error = betterErrors(e);
     res.status(400).json({ success: false, error });
   }
 };
-
 
 export const postLogin = async (req: Request, res: Response) => {
   try {
@@ -64,7 +71,10 @@ export const postLogin = async (req: Request, res: Response) => {
     }
 
     // Compare the provided password with the stored hashed password
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await bcrypt.compare(
+      password,
+      user.password
+    );
     if (!isPasswordValid) {
       return res
         .status(401)
@@ -84,7 +94,6 @@ export const postLogin = async (req: Request, res: Response) => {
       token,
       message: 'User login successful',
     });
-
   } catch (error) {
     // Handle any errors that occur during processing
     const errorMessage = betterErrors(error);
